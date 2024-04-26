@@ -1,0 +1,16 @@
+name: Push to Main
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-test:
+    permissions:
+      contents: read
+      pull-requests: write
+
+    uses: ./.github/workflows/call-build-and-test.yml
+
+    secrets: inherit

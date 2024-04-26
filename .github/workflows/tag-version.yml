@@ -1,0 +1,20 @@
+name: Tagged Version
+
+on:
+  push:
+    tags:
+      - v*
+
+permissions:
+  contents: write
+  packages: write
+
+jobs:
+  release-and-deploy:
+    permissions:
+      contents: write
+      packages: write
+
+    uses: ./.github/workflows/call-release-and-deploy.yml
+
+    secrets: inherit

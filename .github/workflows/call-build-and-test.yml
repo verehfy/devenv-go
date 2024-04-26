@@ -1,0 +1,29 @@
+name: Release and Deploy Application
+
+on:
+  workflow_call: {}
+
+jobs:
+  build-and-test:
+    name: Build and Test Docker image
+    runs-on: ubuntu-latest
+
+    env:
+      REGISTRY: ghcr.io
+      IMAGE_NAME: ${{ github.repository }}
+
+    permissions:
+      contents: read
+      pull-requests: write
+
+    steps:
+      - name: Clone the repo
+        uses: actions/checkout@v4
+
+      - name: Build Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: Containerfile
+          push: false
+          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:v0.1.0-build-only
